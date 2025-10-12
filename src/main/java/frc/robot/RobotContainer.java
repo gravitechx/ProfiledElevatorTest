@@ -4,17 +4,29 @@
 
 package frc.robot;
 
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.Commands;
+import frc.robot.commands.TuneElevator;
+import frc.robot.subsystems.Elevator;
 
 public class RobotContainer {
-  public RobotContainer() {
-    configureBindings();
-  }
+    public static NetworkTableInstance ntInstance = NetworkTableInstance.getDefault();
+    private Elevator elevatorSub = new Elevator();
+    public RobotContainer() {
+        configureBindings();
+    }
 
-  private void configureBindings() {}
+    private void configureBindings() {}
 
-  public Command getAutonomousCommand() {
-    return Commands.print("No autonomous command configured");
-  }
+    public Command getAutonomousCommand() {
+      return Commands.print("No autonomous command configured");
+    }
+
+    public void tuneElevator(){
+        Command elevatorTuningCommand = new TuneElevator(elevatorSub, 10);
+        elevatorTuningCommand.schedule();
+    }
 }

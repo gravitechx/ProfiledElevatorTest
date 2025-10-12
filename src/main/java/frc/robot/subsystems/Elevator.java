@@ -13,15 +13,15 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import static frc.robot.Constants.Elevator.*;
 
 public class Elevator extends SubsystemBase{
-    private SparkMax m_elevatorLeaderMotor = new SparkMax(0, MotorType.kBrushless);
-    private SparkMax m_elevatorFollowerMotor = new SparkMax(1, MotorType.kBrushless);
+    private SparkMax m_elevatorLeaderMotor = new SparkMax(kLeaderMotorCANID, MotorType.kBrushless);
+    private SparkMax m_elevatorFollowerMotor = new SparkMax(kFollowerMotorCANID, MotorType.kBrushless);
     public Elevator(){
         SparkMaxConfig followerConfig = new SparkMaxConfig();
         SparkMaxConfig leaderConfig = new SparkMaxConfig();
 
         SoftLimitConfig softLimit = new SoftLimitConfig();
-        softLimit.forwardSoftLimit(forwardSoftLimit);
-        softLimit.reverseSoftLimit(reverseSoftLimit);
+        softLimit.forwardSoftLimit(kForwardSoftLimit);
+        softLimit.reverseSoftLimit(kReverseSoftLimit);
 
         followerConfig.follow(this.m_elevatorLeaderMotor);
         followerConfig.idleMode(IdleMode.kBrake);
@@ -39,7 +39,7 @@ public class Elevator extends SubsystemBase{
         this.m_elevatorFollowerMotor.set(percentOutput);
     }
 
-    public void closedLoopControl(){
-        this.m_elevatorLeaderMotor.getClosedLoopController();
+    public double getEncoderDistance(){
+        return this.m_elevatorLeaderMotor.getEncoder().getPosition();
     }
 }
