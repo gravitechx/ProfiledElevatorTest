@@ -19,14 +19,15 @@ public class Elevator extends SubsystemBase{
         SparkMaxConfig followerConfig = new SparkMaxConfig();
         SparkMaxConfig leaderConfig = new SparkMaxConfig();
 
+        followerConfig.follow(this.m_elevatorLeaderMotor);
+        followerConfig.idleMode(IdleMode.kBrake);
+        followerConfig.inverted(true); //TODO check if this is needed
+        
         SoftLimitConfig softLimit = new SoftLimitConfig();
         softLimit.forwardSoftLimit(kForwardSoftLimit);
         softLimit.reverseSoftLimit(kReverseSoftLimit);
-
-        followerConfig.follow(this.m_elevatorLeaderMotor);
-        followerConfig.idleMode(IdleMode.kBrake);
+        leaderConfig.softLimit.apply(softLimit);
         leaderConfig.idleMode(IdleMode.kBrake);
-        leaderConfig.softLimit.apply(new SoftLimitConfig());
 
         this.m_elevatorFollowerMotor.configure(followerConfig, ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
         this.m_elevatorLeaderMotor.configure(leaderConfig, ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
