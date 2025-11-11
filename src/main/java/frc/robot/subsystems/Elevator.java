@@ -78,7 +78,7 @@ public class Elevator extends SubsystemBase{
         return false;
     }
 
-    public Command goToPosition(double goalEncoderPosition){
+    public Command getPositionCommand(double goalEncoderPosition){
         return Commands.startRun(
             //intitialize
             () -> this.elevatorController.setGoal(goalEncoderPosition), 

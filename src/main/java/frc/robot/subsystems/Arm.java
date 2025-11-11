@@ -21,7 +21,7 @@ public class Arm extends SubsystemBase{
         
     }
 
-    public Command setPosition(double pivotPosition, double wristPosition){
+    public Command getPositionCommand(double pivotPosition, double wristPosition){
         return Commands.run(() -> {
             this.pivotMotor.setPosition(pivotPosition);
             this.wristController.setReference(wristPosition, ControlType.kPosition);
