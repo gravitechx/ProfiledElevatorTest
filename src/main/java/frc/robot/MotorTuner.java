@@ -68,7 +68,7 @@ public class MotorTuner extends DogLog{
             }
         }
     }
-    public static class SparkMotor{
+    public static class SparkMaxMotor{
         /*
          * This is a PID with a feedforward value
          * RevLib only offers one feedforward value
