@@ -97,6 +97,7 @@ public class Elevator extends SubsystemBase{
                 this.setVoltage(
                     pidOutput + feedForwardOutput
                 );
+                DogLog.log("elevator output ", pidOutput + feedForwardOutput);
             },
             this
         );
@@ -104,5 +105,6 @@ public class Elevator extends SubsystemBase{
 
     public void tuneElevator(){
         MotorTuner.NativeController.tunablePID("Elevator Controller", elevatorController);
+        MotorTuner.NativeController.tunableElevatorFeedforward("Elevator Feedforward", () -> this.elevatorFeedForward, updatedVal -> this.elevatorFeedForward = updatedVal);
     }
 }
