@@ -4,6 +4,9 @@ import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SoftLimitConfig;
 import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
+
+import dev.doglog.DogLog;
+
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
@@ -51,12 +54,12 @@ public class Elevator extends SubsystemBase{
         SmartDashboard.putData(elevatorController);
         followerConfig.follow(this.m_elevatorLeaderMotor);
         followerConfig.idleMode(IdleMode.kBrake);
-        followerConfig.inverted(true); //TODO check if this is needed
+        followerConfig.inverted(false); //TODO check if this is needed
         
         SoftLimitConfig softLimit = new SoftLimitConfig();
         softLimit.forwardSoftLimit(kForwardSoftLimit);
         softLimit.reverseSoftLimit(kReverseSoftLimit);
-        leaderConfig.softLimit.apply(softLimit);
+        // leaderConfig.softLimit.apply(softLimit);
         leaderConfig.idleMode(IdleMode.kBrake);
 
         this.m_elevatorFollowerMotor.configure(followerConfig, ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
@@ -88,6 +91,9 @@ public class Elevator extends SubsystemBase{
                 double feedForwardOutput = this.elevatorFeedForward.calculate(
                     this.elevatorController.getSetpoint().velocity
                 );
+                DogLog.log("PID output", this.elevatorController.getSetpoint().position);
+                DogLog.log("Feedforward", feedForwardOutput);
+                DogLog.log("total output", pidOutput + feedForwardOutput);
                 this.setVoltage(
                     pidOutput + feedForwardOutput
                 );

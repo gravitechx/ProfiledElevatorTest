@@ -16,4 +16,6 @@ public class Constants {
         public static final double kFeedForwardkA = 0;
         public static final double kFeedForwardkS = 0;
     }
+
+    public static final String PivotConstants = null;
 }
