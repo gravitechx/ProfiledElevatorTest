@@ -4,6 +4,9 @@ import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SoftLimitConfig;
 import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
+
+import dev.doglog.DogLog;
+
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
@@ -91,6 +94,7 @@ public class Elevator extends SubsystemBase{
                 this.setVoltage(
                     pidOutput + feedForwardOutput
                 );
+                DogLog.log("elevator output ", pidOutput + feedForwardOutput);
             },
             this
         );
@@ -98,5 +102,6 @@ public class Elevator extends SubsystemBase{
 
     public void tuneElevator(){
         MotorTuner.NativeController.tunablePID("Elevator Controller", elevatorController);
+        MotorTuner.NativeController.tunableElevatorFeedforward("Elevator Feedforward", () -> this.elevatorFeedForward, updatedVal -> this.elevatorFeedForward = updatedVal);
     }
 }

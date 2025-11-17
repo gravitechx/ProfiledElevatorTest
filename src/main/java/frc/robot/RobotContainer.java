@@ -5,8 +5,10 @@
 package frc.robot;
 
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.TuneElevator;
 import frc.robot.subsystems.Elevator;
 
@@ -17,14 +19,19 @@ public class RobotContainer {
         configureBindings();
     }
 
-    private void configureBindings() {}
+    private void configureBindings() {
+        Joystick joystick = new Joystick(0);
+        JoystickButton L1 = new JoystickButton(joystick, 1);
+        JoystickButton L2 = new JoystickButton(joystick, 2);
+        L1.onTrue(elevatorSub.getPositionCommand(0));
+        L2.onTrue(elevatorSub.getPositionCommand(10));
+    }
 
     public Command getAutonomousCommand() {
       return Commands.print("No autonomous command configured");
     }
 
     public void tuneElevator(){
-        Command elevatorTuningCommand = new TuneElevator(elevatorSub, 10);
-        elevatorTuningCommand.schedule();
+        elevatorSub.tuneElevator();
     }
 }
