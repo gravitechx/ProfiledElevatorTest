@@ -65,6 +65,10 @@ public class Elevator extends SubsystemBase{
         this.m_elevatorFollowerMotor.configure(followerConfig, ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
         this.m_elevatorLeaderMotor.configure(leaderConfig, ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
     }
+    @Override
+    public void periodic(){
+        DogLog.log("Elevator motor reading", this.m_elevatorFollowerMotor.getAppliedOutput());
+    }
     public void setVoltage(double volts){
         this.m_elevatorLeaderMotor.setVoltage(volts);
     }
@@ -84,7 +88,10 @@ public class Elevator extends SubsystemBase{
     public Command getPositionCommand(double goalEncoderPosition){
         return Commands.startRun(
             //intitialize
-            () -> this.elevatorController.setGoal(goalEncoderPosition), 
+            () -> {
+                this.elevatorController.setGoal(goalEncoderPosition);
+                DogLog.log("Goal Position", goalEncoderPosition);
+            }, 
             //execute
             () -> {
                 double pidOutput = this.elevatorController.calculate(this.getEncoderDistance());
@@ -93,7 +100,6 @@ public class Elevator extends SubsystemBase{
                 );
                 DogLog.log("PID output", this.elevatorController.getSetpoint().position);
                 DogLog.log("Feedforward", feedForwardOutput);
-                DogLog.log("total output", pidOutput + feedForwardOutput);
                 this.setVoltage(
                     pidOutput + feedForwardOutput
                 );
