@@ -68,6 +68,7 @@ public class Elevator extends SubsystemBase{
     @Override
     public void periodic(){
         DogLog.log("Elevator motor reading", this.m_elevatorFollowerMotor.getAppliedOutput());
+        DogLog.log("Elevator Encoder", this.getEncoderDistance());
     }
     public void setVoltage(double volts){
         this.m_elevatorLeaderMotor.setVoltage(volts);
