@@ -99,7 +99,7 @@ public class Elevator extends SubsystemBase{
                 double feedForwardOutput = this.elevatorFeedForward.calculate(
                     this.elevatorController.getSetpoint().velocity
                 );
-                DogLog.log("PID output", this.elevatorController.getSetpoint().position);
+                DogLog.log("PID goal position", this.elevatorController.getSetpoint().position);
                 DogLog.log("Feedforward", feedForwardOutput);
                 this.setVoltage(
                     pidOutput + feedForwardOutput

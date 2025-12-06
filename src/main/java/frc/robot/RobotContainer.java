@@ -27,21 +27,21 @@ public class RobotContainer {
     }
 
     private void configureBindings() {
-        // CommandXboxController controller = new CommandXboxController(0);
+        CommandXboxController controller = new CommandXboxController(0);
         
-        Joystick controller = new Joystick(0);
-        JoystickButton L1Btn = new JoystickButton(controller, 4);
-        JoystickButton L2Btn = new JoystickButton(controller, 3);
-        JoystickButton L3Btn = new JoystickButton(controller, 6);
-        JoystickButton L4Btn = new JoystickButton(controller, 5);
-        JoystickButton percent = new JoystickButton(controller, 11);
+        // Joystick controller = new Joystick(0);
+        // JoystickButton L1Btn = new JoystickButton(controller, 4);
+        // JoystickButton L2Btn = new JoystickButton(controller, 3);
+        // JoystickButton L3Btn = new JoystickButton(controller, 6);
+        // JoystickButton L4Btn = new JoystickButton(controller, 5);
+        // JoystickButton percent = new JoystickButton(controller, 11);
         
 
-        L1Btn.onTrue(elevatorSub.getPositionCommand(0));
-        L2Btn.onTrue(elevatorSub.getPositionCommand(8));
-        L3Btn.onTrue(elevatorSub.getPositionCommand(15));
-        L4Btn.onTrue(elevatorSub.getPositionCommand(20));
-        percent.onTrue(new InstantCommand(() -> this.elevatorSub.setPercentOutput(0.3)));
+        controller.a().onTrue(elevatorSub.getPositionCommand(0));
+        controller.b().onTrue(elevatorSub.getPositionCommand(8));
+        controller.x().onTrue(elevatorSub.getPositionCommand(15));
+        controller.y().onTrue(elevatorSub.getPositionCommand(20));
+        controller.povLeft().onTrue(new InstantCommand(() -> this.elevatorSub.setPercentOutput(0.3)));
 
     }
 
